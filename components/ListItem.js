@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
 ListItem.propTypes = {
   singleMedia: PropTypes.object,
 };
