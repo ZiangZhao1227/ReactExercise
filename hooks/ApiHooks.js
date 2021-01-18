@@ -1,6 +1,5 @@
 import {useEffect, useState} from 'react';
-
-const baseUrl = `http://media.mw.metropolia.fi/wbma/`;
+import {baseUrl} from '../utils/variables';
 
 const useLoadMedia = () => {
   const [mediaArray, setMediaArray] = useState([]);
@@ -25,11 +24,9 @@ const useLoadMedia = () => {
       console.error('loadMedia error', error);
     }
   };
-
   useEffect(() => {
-    loadMedia(20);
+    loadMedia(10);
   }, []);
-
   return mediaArray;
 };
 
