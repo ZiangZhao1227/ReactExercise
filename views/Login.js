@@ -1,3 +1,4 @@
+
 import React, {useContext, useEffect} from 'react';
 import {StyleSheet, View, Text, Button} from 'react-native';
 import PropTypes from 'prop-types';
@@ -18,11 +19,12 @@ const Login = ({navigation}) => {
     try {
       const userData = await postLogin(testUser);
       setIsLoggedIn(true);
-      await AsyncStorage.setItem('userToken',userData.token);
+      await AsyncStorage.setItem('userToken', userData.token);
     } catch (error) {
       console.error('postLogin error', error);
+      // TOOD: add user notification about login error
     }
-  }
+  };
 
   const getToken = async () => {
     const userToken = await AsyncStorage.getItem('userToken');
@@ -40,6 +42,7 @@ const Login = ({navigation}) => {
   useEffect(() => {
     getToken();
     if (isLoggedIn) {
+      // this is to make sure isLoggedIn has changed, will be removed later
       navigation.navigate('Home');
     }
   }, []);
