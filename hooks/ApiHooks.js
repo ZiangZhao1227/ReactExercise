@@ -25,7 +25,7 @@ const useLoadMedia = () => {
     }
   };
   useEffect(() => {
-    loadMedia(20);
+    loadMedia(10);
   }, []);
   return mediaArray;
 };
@@ -43,7 +43,7 @@ const useLogin = () => {
       console.log('postLogin response status', response.status);
       console.log('postLogin userData', userData);
       if (response.ok) {
-        return UserData;
+        return userData;
       } else {
         throw new Error(userData.message);
       }
@@ -55,10 +55,10 @@ const useLogin = () => {
   const checkToken = async (token) => {
     try {
       const options = {
-        method:'GET',
-        headers:{'x-access-token': token},
-      }
-      const response = await fetch(bsseUrl + 'users/user',options);
+        method: 'GET',
+        headers: {'x-access-token': token},
+      };
+      const response = await fetch(baseUrl + 'users/user', options);
       const userData = response.json();
       if (response.ok) {
         return userData;
@@ -73,4 +73,31 @@ const useLogin = () => {
   return {postLogin, checkToken};
 };
 
-export {useLoadMedia, useLogin};
+const useRegister = () => {
+  const postRegister = async (inputs) => {
+    console.log('trying to create user', inputs);
+    const fetchOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(inputs),
+    };
+    try {
+      const response = await fetch(baseUrl + 'users', fetchOptions);
+      const json = await response.json();
+      console.log('register resp', json);
+      if (response.ok) {
+        return json;
+      } else {
+        throw new Error(json.message + ': ' + json.error);
+      }
+    } catch (e) {
+      console.log('ApiHooks register', e.message);
+      throw new Error(e.message);
+    }
+  };
+  return {postRegister};
+};
+
+export {useLoadMedia, useLogin, useRegister};
