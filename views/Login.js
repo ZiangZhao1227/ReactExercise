@@ -1,16 +1,16 @@
 import React, {useContext, useEffect} from 'react';
-import {StyleSheet, View, Text, KeyboardAvoidingView} from 'react-native';
+import {StyleSheet, View, Text,KeyboardAvoidingView} from 'react-native';
 import PropTypes from 'prop-types';
 import {MainContext} from '../contexts/MainContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useLogin} from '../hooks/ApiHooks';
+import {useUser} from '../hooks/ApiHooks';
 import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
 
 const Login = ({navigation}) => {
   const {isLoggedIn, setIsLoggedIn, setUser} = useContext(MainContext);
   console.log('isLoggedIn?', isLoggedIn);
-  const {checkToken} = useLogin();
+  const {checkToken} = useUser();
 
   const getToken = async () => {
     const userToken = await AsyncStorage.getItem('userToken');
